@@ -8,6 +8,7 @@ const tableWebcomponent = r2wc(BcgTable, { props: {
   columns: "json",
   groupedcolumns: "json",
   editrows: "boolean",
+  columnresizing: "boolean",
   settablecolumns: "boolean",
   paging: "boolean"
 } });
