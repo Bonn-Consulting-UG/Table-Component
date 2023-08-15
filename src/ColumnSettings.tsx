@@ -33,7 +33,6 @@ const ColumnSettings = ({ table }: any) => {
   }) => {
     return (
       <div style={{float: 'right', cursor: 'pointer'}} onClick={() => {
-          console.log(showColumnSettings)
           showColumnSettings = !showColumnSettings;
           // trigger change detection
           if (data) setData([...data]);

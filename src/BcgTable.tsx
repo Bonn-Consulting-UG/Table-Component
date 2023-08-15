@@ -4,6 +4,7 @@ import { Table, useTable } from 'ka-table';
 import { EditingMode, SortingMode, PagingPosition } from 'ka-table/enums';
 import { dataArray, defaultColumns } from './dummyData'
 import ColumnSettings from './ColumnSettings';
+import { CSVLink } from 'react-csv';
 
 type TableProps = {
   columns?: any,
@@ -14,6 +15,7 @@ type TableProps = {
   groupedcolumns?: any,
   columnresizing?: any
   columnreordering?: any,
+  csvexport?: any
 };
 
 
@@ -26,7 +28,8 @@ const BcgTable = (props: TableProps) => {
     columnresizing,
     columnreordering,
     settablecolumns,
-    groupedcolumns
+    groupedcolumns,
+    csvexport
   } = props
 
   const isRowEditable = editrows ? EditingMode.Cell : EditingMode.None
@@ -44,9 +47,7 @@ const BcgTable = (props: TableProps) => {
   const draggableHeader = (column: any) => {
     return (
       <>
-        {(column.columnsKeys?.length > 0)
-        ? null
-        : <span style={{cursor: 'move'}}>&#8942; </span>}
+        {(!column.columnsKeys) && <span style={{cursor: 'move'}}>&#8942; </span>}
         <span>{column.title}</span>
       </>
       );
@@ -54,7 +55,30 @@ const BcgTable = (props: TableProps) => {
 
   return (
     <div>
-      {settablecolumns && <ColumnSettings table={table} />}
+      {settablecolumns && 
+      <ColumnSettings table={table} />}
+
+      {csvexport && 
+      <div style={{ height: '2em' }}>
+        <CSVLink
+          style={{ float: "right", textDecoration: "none" }}
+          data={tabledata}
+          headers={columns.map((c: any) => ({ label: c.title!, key: c.key! }))}
+          filename='bcg-table.data.csv'
+          enclosingCharacter={''}
+          separator={';'}>
+          <span style={{
+            border: "1px solid black",
+            borderRadius: "15px",
+            paddingTop: "0.1em",
+            paddingBottom: "0.1em",
+            paddingLeft: "0.5em",
+            paddingRight: "0.5em",
+            color: "black"
+            }}>&#8675; csv</span>
+        </CSVLink>
+      </div>}
+
       <Table
         table={table}
         columns={columns}
