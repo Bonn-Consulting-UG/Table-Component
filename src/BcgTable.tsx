@@ -13,6 +13,7 @@ type TableProps = {
   settablecolumns?: any,
   groupedcolumns?: any,
   columnresizing?: any
+  columnreordering?: any,
 };
 
 
@@ -23,6 +24,7 @@ const BcgTable = (props: TableProps) => {
     editrows,
     paging,
     columnresizing,
+    columnreordering,
     settablecolumns,
     groupedcolumns
   } = props
@@ -39,6 +41,17 @@ const BcgTable = (props: TableProps) => {
     position: PagingPosition.Bottom
   }
 
+  const draggableHeader = (column: any) => {
+    return (
+      <>
+        {(column.columnsKeys?.length > 0)
+        ? null
+        : <span style={{cursor: 'move'}}>&#8942; </span>}
+        <span>{column.title}</span>
+      </>
+      );
+  }
+
   return (
     <div>
       {settablecolumns && <ColumnSettings table={table} />}
@@ -46,12 +59,18 @@ const BcgTable = (props: TableProps) => {
         table={table}
         columns={columns}
         groupedColumns={groupedcolumns}
+        columnReordering={columnreordering}
         data={tabledata}
         editingMode={isRowEditable}
         rowKeyField={'id'}
         columnResizing={columnresizing}
         sortingMode={SortingMode.Single}
         paging={pagingOptions}
+        childComponents={columnreordering ? {
+          headCellContent: {
+            content: ({column}) => draggableHeader(column)
+          }
+        } : undefined}
       />
     </div>
   );
