@@ -12,6 +12,7 @@ const tableWebcomponent = r2wc(BcgTable, { props: {
   columnreordering: "boolean",
   settablecolumns: "boolean",
   paging: "boolean",
-  csvexport: "boolean"
+  csvexport: "boolean",
+  pdfexport: "boolean"
 } });
 customElements.define("bcg-table", tableWebcomponent);
