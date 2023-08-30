@@ -1,0 +1,7 @@
+.collapsed-settings {
+  overflow-y: hidden;
+}
+
+.collapsed-settings .ka-tbody {
+  display: none;
+}

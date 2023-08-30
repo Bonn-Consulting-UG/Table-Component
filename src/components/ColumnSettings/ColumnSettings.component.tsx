@@ -1,4 +1,5 @@
 import 'ka-table/style.css';
+import './ColumnSettings.styles.css'
 import React, { useState } from 'react';
 import { Table, useTable } from 'ka-table';
 import { ActionType, EditingMode, } from 'ka-table/enums';
@@ -80,14 +81,16 @@ const ColumnSettings = ({ table }: any) => {
   }
 
   return (
-    <Table
-      table={settingsTable}
-      rowKeyField={'key'}
-      data={showColumnSettings ? data : []}
-      columns={columns as any}
-      editingMode={EditingMode.None}
-      childComponents={childComponents}
-    />
+    <div className={!showColumnSettings ? 'collapsed-settings' : ''}>
+      <Table
+        table={settingsTable}
+        rowKeyField={'key'}
+        data={data}
+        columns={columns as any}
+        editingMode={EditingMode.None}
+        childComponents={childComponents}
+      />
+    </div>
   );
 };
 
