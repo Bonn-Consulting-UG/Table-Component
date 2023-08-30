@@ -23,9 +23,9 @@ const styles = {
 
 const CsvExport = ({ tabledata, columns }: any) => {
     return (
-    <div style={styles.wrapper as any}>
+    <div style={styles.wrapper}>
       <CSVLink
-        style={styles.link as any}
+        style={styles.link}
         data={tabledata}
         headers={columns.map((c: any) => ({ label: c.title!, key: c.key! }))}
         filename='bcg-table.data.csv'

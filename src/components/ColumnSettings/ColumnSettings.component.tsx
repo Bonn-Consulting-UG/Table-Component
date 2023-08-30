@@ -3,8 +3,24 @@ import React, { useState } from 'react';
 import { Table, useTable } from 'ka-table';
 import { ActionType, EditingMode, } from 'ka-table/enums';
 import CellEditorBoolean from 'ka-table/Components/CellEditorBoolean/CellEditorBoolean';
-import { columns } from './dummyData'
 import { IHeadCellProps } from 'ka-table/props';
+import { columns } from './settingColumns';
+
+const styles = {
+  expandButtonContainer: {
+    display: 'flex',
+    justifyContent: 'end',
+    cursor: 'pointer'
+  },
+  expanded: {
+    width: '14px',
+    transform: 'translateY(3px)'
+  },
+  collapsed: {
+    width: '14px',
+    transform: 'rotate(180deg)'
+  }
+}
 
 let showColumnSettings = true;
 
@@ -32,14 +48,14 @@ const ColumnSettings = ({ table }: any) => {
     column: { title },
   }) => {
     return (
-      <div style={{float: 'right', cursor: 'pointer'}} onClick={() => {
+      <div style={styles.expandButtonContainer} onClick={() => {
           showColumnSettings = !showColumnSettings;
           // trigger change detection
           if (data) setData([...data]);
         }}>
         {showColumnSettings
-        ? <div style={{ width: '14px', transform: 'translateY(3px)'}}>&#8963;</div>
-        : <div style={{width: '14px', transform: 'rotate(180deg)'}}>&#8963;</div>}
+        ? <div style={styles.expanded}>&#8963;</div>
+        : <div style={styles.collapsed}>&#8963;</div>}
       </div>
     );
   };

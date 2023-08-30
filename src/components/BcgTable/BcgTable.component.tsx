@@ -1,23 +1,27 @@
 import 'ka-table/style.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, useTable } from 'ka-table';
 import { EditingMode, SortingMode, PagingPosition } from 'ka-table/enums';
 import { dataArray, defaultColumns } from './dummyData'
-import ColumnSettings from './ColumnSettings';
-import PdfExport from './PdfExport';
-import CsvExport from './CsvExport';
+import ColumnSettings from '../ColumnSettings/ColumnSettings.component';
+import PdfExport from '../PdfExport/PdfExport.component';
+import CsvExport from '../CsvExport/CsvExport.component';
+import { filterData } from '../ExtendedFilters/filterData';
+import { ColumnDefinition } from '../../model/ColumnDefinition';
+import ExtendedFilters from '../ExtendedFilters/ExtendedFilters.component';
 
 type TableProps = {
-  columns?: any,
+  columns?: ColumnDefinition[],
   tabledata?: any,
-  editrows?: any,
-  paging?: any,
-  settablecolumns?: any,
   groupedcolumns?: any,
-  columnresizing?: any
-  columnreordering?: any,
-  csvexport?: any,
-  pdfexport?: any
+  editrows?: boolean,
+  paging?: boolean,
+  settablecolumns?: boolean,
+  columnresizing?: boolean
+  columnreordering?: boolean,
+  csvexport?: boolean,
+  pdfexport?: boolean,
+  extendedfilters?: boolean
 };
 
 const styles = {
@@ -43,7 +47,8 @@ const BcgTable = (props: TableProps) => {
     settablecolumns,
     groupedcolumns,
     csvexport,
-    pdfexport
+    pdfexport,
+    extendedfilters
   } = props
 
   const isRowEditable = editrows ? EditingMode.Cell : EditingMode.None
@@ -67,11 +72,14 @@ const BcgTable = (props: TableProps) => {
       );
   }
 
+  const [filterValue, changeFilter] = useState({groupName: 'and', items: []});
+
   return (
     <div>
-      {settablecolumns && 
-      <ColumnSettings table={table} />}
+      {settablecolumns && <ColumnSettings table={table} />}
 
+      {extendedfilters && <ExtendedFilters {...{columns, filterValue, changeFilter}}></ExtendedFilters>}
+      
       <div style={styles.exportRow}>
         {csvexport && <CsvExport tabledata={tabledata} columns={columns}/>}
         {pdfexport && <PdfExport table={table}/>}
@@ -79,7 +87,7 @@ const BcgTable = (props: TableProps) => {
 
       <Table
         table={table}
-        columns={columns}
+        columns={columns as any}
         groupedColumns={groupedcolumns}
         columnReordering={columnreordering}
         data={tabledata}
@@ -88,6 +96,7 @@ const BcgTable = (props: TableProps) => {
         columnResizing={columnresizing}
         sortingMode={SortingMode.Single}
         paging={pagingOptions}
+        extendedFilter={(data) => filterData(data, filterValue)}
         childComponents={columnreordering ? {
           headCellContent: {
             content: ({column}) => draggableHeader(column)

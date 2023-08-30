@@ -1,0 +1,27 @@
+.fc-button-color-secondary {
+  color: rgb(8, 111, 228) !important;
+}
+
+.fc-button-color-primary {
+  color: rgb(183, 12, 195) !important;
+}
+
+.fc-button-add::before {
+  font-weight: bold;
+  font-size: 20px !important;
+  color: rgb(45, 145, 11) !important;
+}
+
+.fc-button-remove::before {
+  font-weight: bold;
+  font-size: 20px !important;
+  color: rgb(215, 42, 42) !important;
+}
+
+.filterContainer {
+  background: #F1F5F7;
+  border-radius: 10px;
+  margin-bottom: 1em;
+  padding: 1em;
+  color: rgb(30,30,30);
+}
