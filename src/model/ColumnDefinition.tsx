@@ -5,4 +5,6 @@ export interface ColumnDefinition {
     key: string;
     title: string;
     dataType: DataType | CustomType;
+    style?: React.CSSProperties;
+    onValueChanged?: (action: any) => void;
 }

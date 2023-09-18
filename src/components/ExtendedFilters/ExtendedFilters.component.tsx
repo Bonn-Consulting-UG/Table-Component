@@ -17,7 +17,7 @@ const ExtendedFilters = (props: {columns: ColumnDefinition[], filterValue: any, 
       case DataType.Number:
         return [ FilterOperators.Equals, FilterOperators.IsNotEqual, FilterOperators.MoreThan, FilterOperators.LessThan]
       default:
-        return []
+        return [FilterOperators.Equals]
     }
   }
 

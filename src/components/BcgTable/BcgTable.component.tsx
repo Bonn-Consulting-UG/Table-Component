@@ -1,7 +1,7 @@
 import 'ka-table/style.css';
 import React, { useState } from 'react';
 import { Table, useTable } from 'ka-table';
-import { EditingMode, SortingMode, PagingPosition } from 'ka-table/enums';
+import { EditingMode, SortingMode, PagingPosition, ActionType } from 'ka-table/enums';
 import { dataArray, defaultColumns } from './dummyData'
 import ColumnSettings from '../ColumnSettings/ColumnSettings.component';
 import PdfExport from '../PdfExport/PdfExport.component';
@@ -9,6 +9,9 @@ import CsvExport from '../CsvExport/CsvExport.component';
 import { filterData } from '../ExtendedFilters/filterData';
 import { ColumnDefinition } from '../../model/ColumnDefinition';
 import ExtendedFilters from '../ExtendedFilters/ExtendedFilters.component';
+import CellEditorBoolean from 'ka-table/Components/CellEditorBoolean/CellEditorBoolean';
+import { CustomType } from '../../model/CustomType';
+import { Column } from 'ka-table/models';
 
 type TableProps = {
   columns?: ColumnDefinition[],
@@ -54,6 +57,7 @@ const BcgTable = (props: TableProps) => {
   const isRowEditable = editrows ? EditingMode.Cell : EditingMode.None
 
   const table = useTable();
+  const [currentData, setCurrentData] = useState(tabledata);
 
   const pagingOptions = {
     enabled: paging,
@@ -74,6 +78,32 @@ const BcgTable = (props: TableProps) => {
 
   const [filterValue, changeFilter] = useState({groupName: 'and', items: []});
 
+  const checkboxClicked = (action: any) => {
+    if (action.type !== ActionType.UpdateCellValue) return;
+
+    tabledata.map((row:any, index:number) => {
+      if(index === action.rowKeyValue) {
+        row[action.columnKey] = action.value;
+      }
+    })
+    const col = columns.find(col => col.key === action.columnKey);
+    if (col?.onValueChanged) {
+      col.onValueChanged(action);
+    }
+    setCurrentData([...tabledata])
+  }
+
+  const childComponents = {
+    cell: {
+      content: (props: any) => {
+        switch (props.column.dataType) {
+          case CustomType.Checkbox:
+            return <CellEditorBoolean {...{...props, dispatch: checkboxClicked}} />;
+        }
+      },
+    }
+  }
+
   return (
     <div>
       {settablecolumns && <ColumnSettings table={table} />}
@@ -87,10 +117,10 @@ const BcgTable = (props: TableProps) => {
 
       <Table
         table={table}
-        columns={columns as any}
+        columns={columns as Column[]}
         groupedColumns={groupedcolumns}
         columnReordering={columnreordering}
-        data={tabledata}
+        data={currentData}
         editingMode={isRowEditable}
         rowKeyField={'id'}
         columnResizing={columnresizing}
@@ -100,8 +130,9 @@ const BcgTable = (props: TableProps) => {
         childComponents={columnreordering ? {
           headCellContent: {
             content: ({column}) => draggableHeader(column)
-          }
-        } : undefined}
+          },
+          ...childComponents
+        } : childComponents}
       />
     </div>
   );
