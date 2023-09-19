@@ -23,7 +23,7 @@ const styles = {
   }
 }
 
-let showColumnSettings = true;
+let showColumnSettings = false;
 
 const ColumnSettings = ({ table }: any) => {
   const [data, setData] = useState<any[]>();
@@ -81,7 +81,7 @@ const ColumnSettings = ({ table }: any) => {
   }
 
   return (
-    <div className={!showColumnSettings ? 'collapsed-settings' : ''}>
+    <div className={'settings-table ' + (!showColumnSettings ? 'collapsed-settings' : '')}>
       <Table
         table={settingsTable}
         rowKeyField={'key'}
