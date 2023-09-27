@@ -12,6 +12,7 @@ import ExtendedFilters from '../ExtendedFilters/ExtendedFilters.component';
 import CellEditorBoolean from 'ka-table/Components/CellEditorBoolean/CellEditorBoolean';
 import { CustomType } from '../../model/CustomType';
 import { Column } from 'ka-table/models';
+import DOMPurify from 'dompurify';
 
 type TableProps = {
   columns?: ColumnDefinition[],
@@ -86,11 +87,16 @@ const BcgTable = (props: TableProps) => {
         row[action.columnKey] = action.value;
       }
     })
-    const col = columns.find(col => col.key === action.columnKey);
-    if (col?.onValueChanged) {
-      col.onValueChanged(action);
-    }
+    triggerColumnCallback(action.columnKey, action)
     setCurrentData([...tabledata])
+  }
+
+  const triggerColumnCallback = (colKey: string, action: any) => {
+    const col = columns.find(col => col.key === colKey);
+    if (!col?.onValueChanged) return
+    // eslint-disable-next-line no-eval
+    const callback = eval(col.onValueChanged);
+    callback(action);
   }
 
   const childComponents = {
@@ -99,6 +105,12 @@ const BcgTable = (props: TableProps) => {
         switch (props.column.dataType) {
           case CustomType.Checkbox:
             return <CellEditorBoolean {...{...props, dispatch: checkboxClicked}} />;
+          case CustomType.Icon:
+            return <div
+            style={props.column.cellStyle}
+            onClick={() => triggerColumnCallback(props.column.key, props)}
+            dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(props.column.icon)}}>
+            </div>
         }
       },
     }
