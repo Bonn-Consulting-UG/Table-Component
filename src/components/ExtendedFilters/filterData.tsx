@@ -4,19 +4,19 @@ export const isEmpty = (value: any) => (value == null || value.length === 0);
 
 const contains = (data: any[], item: any) => {
   if (!item.value) { return true; }
-  return data[item.field].toLowerCase().includes(item.value.toLowerCase());
+  return data[item.field]?.toLowerCase().includes(item.value.toLowerCase());
 };
 const doesNotContain = (data: any[], item: any) => {
   if (!item.value) { return true; }
-  return !data[item.field].toLowerCase().includes(item.value.toLowerCase());
+  return !data[item.field]?.toLowerCase().includes(item.value.toLowerCase());
 };
 const equals = (data: any[], item: any) => {
   if (!item.value) { return true; }
-  return data[item.field].toString().toLowerCase() === item.value.toString().toLowerCase();
+  return data[item.field]?.toString().toLowerCase() === item.value.toString().toLowerCase();
 };
 const isNotEqual = (data: any[], item: any) => {
   if (!item.value) { return true; }
-  return data[item.field].toString().toLowerCase() !== item.value.toString().toLowerCase();
+  return data[item.field]?.toString().toLowerCase() !== item.value.toString().toLowerCase();
 };
 const more = (data: any[], item: any) => data[item.field] > item.value;
 const less = (data: any[], item: any) => data[item.field] < item.value;
