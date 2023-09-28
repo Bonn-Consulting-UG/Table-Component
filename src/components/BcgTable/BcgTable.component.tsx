@@ -1,4 +1,4 @@
-import 'ka-table/style.css';
+import './BcgTable.style.scss'
 import React, { useState } from 'react';
 import { Table, useTable } from 'ka-table';
 import { EditingMode, SortingMode, PagingPosition, ActionType } from 'ka-table/enums';
@@ -117,7 +117,7 @@ const BcgTable = (props: TableProps) => {
   }
 
   return (
-    <div>
+    <div className="table-wrapper">
       {settablecolumns && <ColumnSettings table={table} />}
 
       {extendedfilters && <ExtendedFilters {...{columns, filterValue, changeFilter}}></ExtendedFilters>}
@@ -126,6 +126,8 @@ const BcgTable = (props: TableProps) => {
         {csvexport && <CsvExport tabledata={tabledata} columns={columns}/>}
         {pdfexport && <PdfExport table={table}/>}
       </div>
+
+      <div className="settings-separator"></div>
 
       <Table
         table={table}

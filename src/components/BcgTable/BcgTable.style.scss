@@ -1,0 +1,17 @@
+$ka-thead-background-color: white;
+@import "ka-table/style.scss";
+
+body {
+    background-color: #efefef;
+}
+
+.table-wrapper {
+    background-color: white;
+    padding: 2em;
+}
+
+.settings-separator {
+    margin-bottom: 1em;
+    margin-top: 0.5em;
+    border: 1px solid #f4f4f4;
+}

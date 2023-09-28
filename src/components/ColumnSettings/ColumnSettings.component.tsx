@@ -1,18 +1,12 @@
 import 'ka-table/style.css';
-import './ColumnSettings.styles.css'
+import './ColumnSettings.styles.scss'
 import React, { useState } from 'react';
 import { Table, useTable } from 'ka-table';
 import { ActionType, EditingMode, } from 'ka-table/enums';
 import CellEditorBoolean from 'ka-table/Components/CellEditorBoolean/CellEditorBoolean';
-import { IHeadCellProps } from 'ka-table/props';
 import { columns } from './settingColumns';
 
 const styles = {
-  expandButtonContainer: {
-    display: 'flex',
-    justifyContent: 'end',
-    cursor: 'pointer'
-  },
   expanded: {
     width: '14px',
     transform: 'translateY(3px)'
@@ -45,36 +39,23 @@ const ColumnSettings = ({ table }: any) => {
     },
   });
 
-  const HeadCell: React.FC<IHeadCellProps> = ({
-    column: { title },
-  }) => {
-    return (
-      <div style={styles.expandButtonContainer} onClick={() => {
-          showColumnSettings = !showColumnSettings;
-          // trigger change detection
-          if (data) setData([...data]);
-        }}>
-        {showColumnSettings
-        ? <div style={styles.expanded}>&#8963;</div>
-        : <div style={styles.collapsed}>&#8963;</div>}
-      </div>
-    );
-  };
+  const switchVisibility = () => {
+    showColumnSettings = !showColumnSettings;
+    // trigger change detection
+    if (data) setData([...data]);
+  }
 
   const childComponents = {
-    rootDiv: { elementAttributes: () => ({ style: { width: 400, marginBottom: 20 } }) },
-    headCell: {
-      content: (props: any) => {
-        if (props.column.key === 'expand'){
-          return <HeadCell {...props}/>;
-        }
-      }
-    },
+    rootDiv: { elementAttributes: () => ({ style: { width: 400 } }) },
     cell: {
       content: (props: any) => {
+        console.log(props)
         switch (props.column.key) {
           case 'visible':
             return <CellEditorBoolean {...props} />;
+          case 'title':
+            if (!props.value) return <i>No Title</i>
+            break;
         }
       },
     },
@@ -82,14 +63,24 @@ const ColumnSettings = ({ table }: any) => {
 
   return (
     <div className={'settings-table ' + (!showColumnSettings ? 'collapsed-settings' : '')}>
-      <Table
-        table={settingsTable}
-        rowKeyField={'key'}
-        data={data}
-        columns={columns as any}
-        editingMode={EditingMode.None}
-        childComponents={childComponents}
-      />
+      <div className="settings-header" onClick={switchVisibility}>
+        Column Visibility
+        <div>
+          {showColumnSettings
+          ? <div style={styles.expanded}>&#8963;</div>
+          : <div style={styles.collapsed}>&#8963;</div>}
+        </div>
+      </div>
+      <div className="settings-table-wrapper">
+        <Table
+          table={settingsTable}
+          rowKeyField={'key'}
+          data={data}
+          columns={columns as any}
+          editingMode={EditingMode.None}
+          childComponents={childComponents}
+        />
+      </div>
     </div>
   );
 };

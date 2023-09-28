@@ -1,0 +1,40 @@
+@import "../BcgTable/BcgTable.style.scss";
+
+.settings-table {
+  display: flex;
+  justify-content: end;
+  position: relative;
+}
+
+.collapsed-settings .settings-table-wrapper {
+  box-shadow: none ;
+  //overflow-y: hidden;
+}
+
+.collapsed-settings .ka-tbody {
+  display: none;
+}
+
+.settings-header {
+  display: flex;
+  justify-content: end;
+  padding-right: 0.5em;
+  align-items: center;
+  gap: 0.5em;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  width: 400px;
+  height: 50px;
+  background-color: $ka-thead-background-color;
+  z-index: 2;
+}
+
+.settings-table-wrapper {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 400px;
+  z-index: 1;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}

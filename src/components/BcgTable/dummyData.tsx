@@ -23,12 +23,12 @@ const testSVG = `<svg class="icon--24" xmlns="http://www.w3.org/2000/svg" width=
 s9.5,4.3,9.5,9.5S17.3,21.5,12,21.5z"/></svg>`;
 
 const defaultColumns: ColumnDefinition[] = [
+  { key: 'column0', title: '', width: 70, dataType: CustomType.Icon, icon: testSVG, onValueChanged: dummyCallback.toString(), cellStyle:{cursor: 'pointer', display:'flex', justifyContent:'center'}},
   { key: 'column1', title: 'Column 1', dataType: DataType.String },
   { key: 'column2', title: 'Column 2', dataType: DataType.String },
   { key: 'column3', title: 'Column 3', dataType: DataType.String },
   { key: 'column4', title: 'Column 4', dataType: DataType.Number },
   { key: 'column5', title: 'Column 5', dataType: CustomType.Checkbox, onValueChanged: dummyCallback.toString()},
-  { key: 'column6', title: '', dataType: CustomType.Icon, icon: testSVG, onValueChanged: dummyCallback.toString(), cellStyle:{cursor: 'pointer', display:'flex', justifyContent:'center'}},
 ]
 
 export { defaultColumns, dataArray };

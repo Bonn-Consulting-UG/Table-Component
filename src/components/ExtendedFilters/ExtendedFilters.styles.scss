@@ -1,3 +1,6 @@
+
+@import "../BcgTable/BcgTable.style.scss";
+
 .fc-button-color-secondary {
   color: rgb(8, 111, 228) !important;
 }
@@ -19,9 +22,8 @@
 }
 
 .filterContainer {
-  background: #F1F5F7;
-  border-radius: 10px;
-  margin-bottom: 1em;
+  background: $ka-thead-background-color;
+  margin: 1em;
   padding: 1em;
   color: rgb(30,30,30);
 }

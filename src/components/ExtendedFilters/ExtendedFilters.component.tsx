@@ -1,5 +1,5 @@
 import React from "react";
-import './ExtendedFilters.styles.css';
+import './ExtendedFilters.styles.scss';
 import FilterControl from "react-filter-control";
 import { IFilterControlFilterValue } from 'react-filter-control/interfaces';
 import { DataType } from "ka-table";
