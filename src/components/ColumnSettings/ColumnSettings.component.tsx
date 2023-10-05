@@ -49,7 +49,6 @@ const ColumnSettings = ({ table }: any) => {
     rootDiv: { elementAttributes: () => ({ style: { width: 400 } }) },
     cell: {
       content: (props: any) => {
-        console.log(props)
         switch (props.column.key) {
           case 'visible':
             return <CellEditorBoolean {...props} />;
