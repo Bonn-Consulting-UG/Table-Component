@@ -21,12 +21,16 @@ const styles = {
   }
 }
 
-const PdfExport = ({ table, filterValue }: any) => {
-
+const PdfExport = ({ table, visibleColumns, filterValue }: any) => {
     const exportClick = (orientation?: any) => {
         const doc: any = new jsPDF(orientation);
-        const head = [table.props.columns.map((c: any) => c.title)];
-        const body = filterData(table.props.data, filterValue).map((d: any) => table.props.columns.map((c: any)=> getValueByColumn(d, c)));
+
+        const head = [visibleColumns.map((c: any) => c.title)];
+
+        const body = filterData(table.props.data, filterValue).map((d: any) => 
+          visibleColumns.map((c: any)=> 
+            getValueByColumn(d, c)));
+
         autoTable(doc,{
           margin: 1,
           headStyles: { fillColor: '#F1F5F7', textColor: '#747D86' },

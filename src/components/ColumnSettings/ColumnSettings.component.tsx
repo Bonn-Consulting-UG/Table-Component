@@ -19,7 +19,7 @@ const styles = {
 
 let showColumnSettings = false;
 
-const ColumnSettings = ({ table }: any) => {
+const ColumnSettings = ({ table, visibleColumnCallback }: any) => {
   const [data, setData] = useState<any[]>();
 
   const updateData = (action: any) => setData(table?.props?.columns?.map((c: any) => {
@@ -36,6 +36,7 @@ const ColumnSettings = ({ table }: any) => {
         updateData(action);
       }
       if (action.type === ActionType.ComponentDidMount) updateData(action);
+      visibleColumnCallback(table.props.columns.filter((col: any) => col.visible !== false));
     },
   });
 

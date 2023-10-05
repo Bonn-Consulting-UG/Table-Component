@@ -22,13 +22,13 @@ const styles = {
   }
 }
 
-const CsvExport = ({ tabledata, columns, filterValue }: any) => {
+const CsvExport = ({ tabledata, visibleColumns, filterValue }: any) => {
     return (
     <div style={styles.wrapper}>
       <CSVLink
         style={styles.link}
         data={filterData(tabledata, filterValue)}
-        headers={columns.map((c: any) => ({ label: c.title!, key: c.key! }))}
+        headers={visibleColumns.map((c: any) => ({ label: c.title!, key: c.key! }))}
         filename='bcg-table.data.csv'
         enclosingCharacter={''}
         separator={';'}>

@@ -59,6 +59,7 @@ const BcgTable = (props: TableProps) => {
 
   const table = useTable();
   const [currentData, setCurrentData] = useState(tabledata);
+  const [visibleColumns, setVisibleColumns] = useState(columns);
 
   const pagingOptions = {
     enabled: paging,
@@ -118,13 +119,13 @@ const BcgTable = (props: TableProps) => {
 
   return (
     <div className="table-wrapper">
-      {settablecolumns && <ColumnSettings table={table} />}
+      {settablecolumns && <ColumnSettings table={table} visibleColumnCallback={setVisibleColumns}/>}
 
       {extendedfilters && <ExtendedFilters {...{columns, filterValue, changeFilter}}></ExtendedFilters>}
       
       <div style={styles.exportRow}>
-        {csvexport && <CsvExport tabledata={currentData} columns={columns} filterValue={filterValue}/>}
-        {pdfexport && <PdfExport table={table} filterValue={filterValue}/>}
+        {csvexport && <CsvExport tabledata={currentData} visibleColumns={visibleColumns} filterValue={filterValue}/>}
+        {pdfexport && <PdfExport table={table} visibleColumns={visibleColumns} filterValue={filterValue}/>}
       </div>
 
       <div className="settings-separator"></div>
