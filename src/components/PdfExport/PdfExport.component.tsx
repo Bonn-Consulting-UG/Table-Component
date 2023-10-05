@@ -2,6 +2,7 @@ import jsPDF from "jspdf";
 import autoTable, { RowInput } from "jspdf-autotable";
 import { getValueByColumn } from "ka-table/Utils/DataUtils";
 import React from "react";
+import { filterData } from "../ExtendedFilters/filterData";
 
 const styles = {
   wrapper: {
@@ -20,12 +21,12 @@ const styles = {
   }
 }
 
-const PdfExport = ({ table }: any) => {
+const PdfExport = ({ table, filterValue }: any) => {
 
     const exportClick = (orientation?: any) => {
         const doc: any = new jsPDF(orientation);
         const head = [table.props.columns.map((c: any) => c.title)];
-        const body = table.props.data!.map((d: any) => table.props.columns.map((c: any)=> getValueByColumn(d, c)));
+        const body = filterData(table.props.data, filterValue).map((d: any) => table.props.columns.map((c: any)=> getValueByColumn(d, c)));
         autoTable(doc,{
           margin: 1,
           headStyles: { fillColor: '#F1F5F7', textColor: '#747D86' },

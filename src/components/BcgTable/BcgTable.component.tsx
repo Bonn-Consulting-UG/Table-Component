@@ -123,8 +123,8 @@ const BcgTable = (props: TableProps) => {
       {extendedfilters && <ExtendedFilters {...{columns, filterValue, changeFilter}}></ExtendedFilters>}
       
       <div style={styles.exportRow}>
-        {csvexport && <CsvExport tabledata={tabledata} columns={columns}/>}
-        {pdfexport && <PdfExport table={table}/>}
+        {csvexport && <CsvExport tabledata={currentData} columns={columns} filterValue={filterValue}/>}
+        {pdfexport && <PdfExport table={table} filterValue={filterValue}/>}
       </div>
 
       <div className="settings-separator"></div>

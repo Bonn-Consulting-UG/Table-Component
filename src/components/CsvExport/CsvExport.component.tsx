@@ -1,5 +1,6 @@
 import React from "react";
 import { CSVLink } from 'react-csv';
+import { filterData } from "../ExtendedFilters/filterData";
 
 const styles = {
   wrapper: {
@@ -21,12 +22,12 @@ const styles = {
   }
 }
 
-const CsvExport = ({ tabledata, columns }: any) => {
+const CsvExport = ({ tabledata, columns, filterValue }: any) => {
     return (
     <div style={styles.wrapper}>
       <CSVLink
         style={styles.link}
-        data={tabledata}
+        data={filterData(tabledata, filterValue)}
         headers={columns.map((c: any) => ({ label: c.title!, key: c.key! }))}
         filename='bcg-table.data.csv'
         enclosingCharacter={''}
