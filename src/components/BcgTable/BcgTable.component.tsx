@@ -121,7 +121,7 @@ const BcgTable = (props: TableProps) => {
     <div className="table-wrapper">
       {settablecolumns && <ColumnSettings table={table} visibleColumnCallback={setVisibleColumns}/>}
 
-      {extendedfilters && <ExtendedFilters {...{columns, filterValue, changeFilter}}></ExtendedFilters>}
+      {extendedfilters && <ExtendedFilters {...{columns: [...columns].filter(col => !!col.key), filterValue, changeFilter}}></ExtendedFilters>}
       
       <div style={styles.exportRow}>
         {csvexport && <CsvExport tabledata={currentData} visibleColumns={visibleColumns} filterValue={filterValue}/>}
