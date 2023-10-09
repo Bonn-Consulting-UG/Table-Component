@@ -13,6 +13,9 @@ import CellEditorBoolean from 'ka-table/Components/CellEditorBoolean/CellEditorB
 import { CustomType } from '../../model/CustomType';
 import { Column } from 'ka-table/models';
 import DOMPurify from 'dompurify';
+import { DetailsButton } from '../DetailsRow/DetailsButton.component';
+import { DetailsRow } from '../DetailsRow/DetailsRow.component';
+import { DetailRowOptions } from '../../model/DetailRowOptions';
 
 type TableProps = {
   columns?: ColumnDefinition[],
@@ -25,6 +28,8 @@ type TableProps = {
   columnreordering?: boolean,
   csvexport?: boolean,
   pdfexport?: boolean,
+  grouping?: boolean,
+  detailrowoptions?: DetailRowOptions,
   extendedfilters?: boolean
 };
 
@@ -52,6 +57,8 @@ const BcgTable = (props: TableProps) => {
     groupedcolumns,
     csvexport,
     pdfexport,
+    grouping,
+    detailrowoptions,
     extendedfilters
   } = props
 
@@ -60,12 +67,13 @@ const BcgTable = (props: TableProps) => {
   const table = useTable();
   const [currentData, setCurrentData] = useState(tabledata);
   const [visibleColumns, setVisibleColumns] = useState(columns);
+  const detailsButtonKey = 'show-hide-details-row';
 
   const pagingOptions = {
     enabled: paging,
     pageIndex: 0,
     pageSize: 10,
-    pageSizes: [5, 10, 15],
+    pageSizes: [5, 10, 15, 50, 100],
     position: PagingPosition.Bottom
   }
 
@@ -101,6 +109,18 @@ const BcgTable = (props: TableProps) => {
   }
 
   const childComponents = {
+    cellText: {
+      content: (props: any) => {
+        switch (props.column.key){
+          case detailsButtonKey: return <DetailsButton {...props}/>;
+        }
+      }
+    },
+    detailsRow: {
+      elementAttributes: () => ({
+      }),
+      content: (props: any) => <DetailsRow {...{...props, detailrowoptions}}></DetailsRow>
+    },
     cell: {
       content: (props: any) => {
         switch (props.column.dataType) {
@@ -121,7 +141,7 @@ const BcgTable = (props: TableProps) => {
     <div className="table-wrapper">
       {settablecolumns && <ColumnSettings table={table} visibleColumnCallback={setVisibleColumns}/>}
 
-      {extendedfilters && <ExtendedFilters {...{columns: [...columns].filter(col => !!col.key), filterValue, changeFilter}}></ExtendedFilters>}
+      {extendedfilters && <ExtendedFilters {...{columns: [...columns].filter(col => !!col.key && col.key !== detailsButtonKey), filterValue, changeFilter}}></ExtendedFilters>}
       
       <div style={styles.exportRow}>
         {csvexport && <CsvExport tabledata={currentData} visibleColumns={visibleColumns} filterValue={filterValue}/>}
@@ -141,6 +161,10 @@ const BcgTable = (props: TableProps) => {
         columnResizing={columnresizing}
         sortingMode={SortingMode.Single}
         paging={pagingOptions}
+        groupPanel={{
+          enabled: grouping,
+          text: 'For grouping, drag a column here...'
+        }}
         extendedFilter={(data) => filterData(data, filterValue)}
         childComponents={columnreordering ? {
           headCellContent: {
