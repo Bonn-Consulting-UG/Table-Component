@@ -10,6 +10,14 @@ const doesNotContain = (data: any[], item: any) => {
   if (!item.value) { return true; }
   return !data[item.field]?.toLowerCase().includes(item.value.toLowerCase());
 };
+const beginsWith = (data: any[], item: any) => {
+  if (!item.value) { return true; }
+  return data[item.field]?.toLowerCase().startsWith(item.value.toLowerCase());
+};
+const endsWith = (data: any[], item: any) => {
+  if (!item.value) { return true; }
+  return data[item.field]?.toLowerCase().endsWith(item.value.toLowerCase());
+};
 const equals = (data: any[], item: any) => {
   if (!item.value) { return true; }
   return data[item.field]?.toString().toLowerCase() === item.value.toString().toLowerCase();
@@ -24,6 +32,8 @@ export const filterItem = (data: any[], filter: any) => {
   switch (filter.operator) {
     case Operators.Contains: return contains(data, filter);
     case Operators.DoesNotContain: return doesNotContain(data, filter);
+    case Operators.BeginsWith: return beginsWith(data, filter);
+    case Operators.EndsWith: return endsWith(data, filter);
     case Operators.Equals: return equals(data, filter);
     case Operators.IsNotEqual: return isNotEqual(data, filter);
     case Operators.MoreThan: return more(data, filter);

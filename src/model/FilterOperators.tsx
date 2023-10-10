@@ -1,6 +1,8 @@
 export enum Operators {
     Contains = 'contains',
     DoesNotContain = 'doesNotContain',
+    BeginsWith = 'beginsWith',
+    EndsWith = 'endsWith',
     Equals = '=',
     IsNotEqual = '<>',
     MoreThan = '>',
@@ -15,6 +17,14 @@ export class FilterOperators {
     static DoesNotContain = {
         caption: 'Does not Contain',
         name: Operators.DoesNotContain
+    }
+    static BeginsWith = {
+        caption: 'Begins With',
+        name: Operators.BeginsWith
+    }
+    static EndsWith = {
+        caption: 'Ends With',
+        name: Operators.EndsWith
     }
     static Equals = {
         caption: 'Equals',
