@@ -9,6 +9,17 @@ const styles = {
   collapsed: {
     width: '14px',
     transform: 'rotate(180deg)'
+  },
+  indicator: {
+    backgroundColor: '#4f4f4f',
+    borderRadius: '50%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'white',
+    height: '14px',
+    width: '14px',
+    fontSize: '10px'
   }
 }
 
@@ -22,12 +33,13 @@ export const DetailsButton: React.FC<any> = ({
   const detailData = rowData[detailrowoptions?.columnKey];
   if (!detailData || detailData.length < 1) return <></>
   return (
-    <div style={{cursor: 'pointer'}} onClick={() => {
+    <div style={{cursor: 'pointer', display: 'flex'}} onClick={() => {
       dispatch(isDetailsRowShown ? hideDetailsRow(rowKeyValue) : showDetailsRow(rowKeyValue));
     }}>
       {isDetailsRowShown
       ? <div style={styles.expanded}>&#8963;</div>
       : <div style={styles.collapsed}>&#8963;</div>}
+      <div style={styles.indicator}>{detailData.length}</div>
     </div>
   );
 };
