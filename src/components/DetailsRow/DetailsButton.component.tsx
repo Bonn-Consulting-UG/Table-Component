@@ -1,5 +1,4 @@
 import { hideDetailsRow, showDetailsRow } from "ka-table/actionCreators";
-import { ICellTextProps } from "ka-table/props";
 import React from "react";
 
 const styles = {
@@ -13,11 +12,15 @@ const styles = {
   }
 }
 
-export const DetailsButton: React.FC<ICellTextProps> = ({
+export const DetailsButton: React.FC<any> = ({
   dispatch,
   rowKeyValue,
   isDetailsRowShown,
+  rowData,
+  detailrowoptions
 }) => {
+  const detailData = rowData[detailrowoptions?.columnKey];
+  if (!detailData || detailData.length < 1) return <></>
   return (
     <div style={{cursor: 'pointer'}} onClick={() => {
       dispatch(isDetailsRowShown ? hideDetailsRow(rowKeyValue) : showDetailsRow(rowKeyValue));

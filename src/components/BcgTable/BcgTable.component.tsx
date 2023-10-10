@@ -112,7 +112,7 @@ const BcgTable = (props: TableProps) => {
     cellText: {
       content: (props: any) => {
         switch (props.column.key){
-          case detailsButtonKey: return <DetailsButton {...props}/>;
+          case detailsButtonKey: return <DetailsButton {...{...props, detailrowoptions}}/>;
         }
       }
     },
