@@ -68,6 +68,7 @@ const BcgTable = (props: TableProps) => {
   const [currentData, setCurrentData] = useState(tabledata);
   const [visibleColumns, setVisibleColumns] = useState(columns);
   const detailsButtonKey = 'show-hide-details-row';
+  const rowKeyField = 'id';
 
   const pagingOptions = {
     enabled: paging,
@@ -91,8 +92,8 @@ const BcgTable = (props: TableProps) => {
   const checkboxClicked = (action: any) => {
     if (action.type !== ActionType.UpdateCellValue) return;
 
-    tabledata.map((row:any, index:number) => {
-      if(index === action.rowKeyValue) {
+    tabledata.map((row:any) => {
+      if(row[rowKeyField] === action.rowKeyValue) {
         row[action.columnKey] = action.value;
       }
     })
@@ -141,7 +142,7 @@ const BcgTable = (props: TableProps) => {
     <div className="table-wrapper">
       {settablecolumns && <ColumnSettings table={table} visibleColumnCallback={setVisibleColumns}/>}
 
-      {extendedfilters && <ExtendedFilters {...{columns: [...columns].filter(col => !!col.key && col.key !== detailsButtonKey), filterValue, changeFilter}}></ExtendedFilters>}
+      {extendedfilters && <ExtendedFilters {...{columns: [...columns].filter(col => !!col.key && col.key !== detailsButtonKey && col.dataType !== CustomType.Checkbox ), filterValue, changeFilter}}></ExtendedFilters>}
       
       <div style={styles.exportRow}>
         {csvexport && <CsvExport tabledata={currentData} visibleColumns={visibleColumns} filterValue={filterValue}/>}
@@ -157,7 +158,7 @@ const BcgTable = (props: TableProps) => {
         columnReordering={columnreordering}
         data={currentData}
         editingMode={isRowEditable}
-        rowKeyField={'id'}
+        rowKeyField={rowKeyField}
         columnResizing={columnresizing}
         sortingMode={SortingMode.Single}
         paging={pagingOptions}
