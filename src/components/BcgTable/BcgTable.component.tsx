@@ -119,6 +119,9 @@ const BcgTable = (props: TableProps) => {
     },
     detailsRow: {
       elementAttributes: () => ({
+        style: {
+          backgroundColor: 'rgb(247, 247, 247)'
+        },
       }),
       content: (props: any) => <DetailsRow {...{...props, detailrowoptions}}></DetailsRow>
     },
