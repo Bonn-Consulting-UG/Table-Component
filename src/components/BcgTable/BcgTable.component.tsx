@@ -62,6 +62,10 @@ const BcgTable = (props: TableProps) => {
     extendedfilters
   } = props
 
+  React.useEffect(() => { 
+    setCurrentData([...tabledata])
+  }, [tabledata]);
+
   const isRowEditable = editrows ? EditingMode.Cell : EditingMode.None
 
   const table = useTable();
