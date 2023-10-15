@@ -45,6 +45,14 @@ const styles = {
   }
 }
 
+const pagingOptions = {
+  enabled: false,
+  pageIndex: 0,
+  pageSize: 10,
+  pageSizes: [5, 10, 15, 50, 100],
+  position: PagingPosition.Bottom
+}
+
 const BcgTable = (props: TableProps) => {
   const {
     columns = defaultColumns,
@@ -68,19 +76,18 @@ const BcgTable = (props: TableProps) => {
 
   const isRowEditable = editrows ? EditingMode.Cell : EditingMode.None
 
-  const table = useTable();
+  const table = useTable({
+    onDispatch: (action, newProps) => {
+      // keep paging state for possible rerender
+      pagingOptions.pageIndex = action.pageIndex ?? pagingOptions.pageIndex;
+      pagingOptions.pageSize = action.pageSize ?? pagingOptions.pageSize;
+    }
+  });
   const [currentData, setCurrentData] = useState(tabledata);
   const [visibleColumns, setVisibleColumns] = useState(columns);
   const detailsButtonKey = 'show-hide-details-row';
   const rowKeyField = 'id';
-
-  const pagingOptions = {
-    enabled: paging,
-    pageIndex: 0,
-    pageSize: 10,
-    pageSizes: [5, 10, 15, 50, 100],
-    position: PagingPosition.Bottom
-  }
+  pagingOptions.enabled = !!paging;
 
   const draggableHeader = (column: any) => {
     return (
