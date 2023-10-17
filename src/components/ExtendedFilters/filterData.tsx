@@ -12,19 +12,19 @@ const doesNotContain = (data: any[], item: any) => {
 };
 const beginsWith = (data: any[], item: any) => {
   if (!item.value) { return true; }
-  return data[item.field]?.toLowerCase().startsWith(item.value.toLowerCase());
+  return !!data[item.field]?.split(',').find((data: string) => data?.trim().toLowerCase().startsWith(item.value.toLowerCase()))
 };
 const beginsNotWith = (data: any[], item: any) => {
   if (!item.value) { return true; }
-  return !data[item.field]?.toLowerCase().startsWith(item.value.toLowerCase());
+  return !data[item.field]?.split(',').find((data: string) => data?.trim().toLowerCase().startsWith(item.value.toLowerCase()))
 };
 const endsWith = (data: any[], item: any) => {
   if (!item.value) { return true; }
-  return data[item.field]?.toLowerCase().endsWith(item.value.toLowerCase());
+  return !!data[item.field]?.split(',').find((data: string) => data?.trim().toLowerCase().endsWith(item.value.toLowerCase()))
 };
 const endsNotWith = (data: any[], item: any) => {
   if (!item.value) { return true; }
-  return !data[item.field]?.toLowerCase().endsWith(item.value.toLowerCase());
+  return !data[item.field]?.split(',').find((data: string) => data?.trim().toLowerCase().endsWith(item.value.toLowerCase()))
 };
 const equals = (data: any[], item: any) => {
   if (!item.value) { return true; }
