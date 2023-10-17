@@ -13,11 +13,11 @@ const ExtendedFilters = (props: {columns: ColumnDefinition[], filterValue: any, 
   const getOperators = (dataType: DataType | CustomType) => {
     switch(dataType) {
       case DataType.String: 
-        return [ FilterOperators.Contains, FilterOperators.DoesNotContain, FilterOperators.BeginsWith, FilterOperators.EndsWith ]
+        return [ FilterOperators.Contains, FilterOperators.DoesNotContain, FilterOperators.BeginsWith, FilterOperators.BeginsNotWith, FilterOperators.EndsWith, FilterOperators.EndsNotWith ]
       case DataType.Number:
         return [ FilterOperators.Equals, FilterOperators.IsNotEqual, FilterOperators.MoreThan, FilterOperators.LessThan]
       default:
-        return [FilterOperators.Equals]
+        return [FilterOperators.Equals, FilterOperators.IsNotEqual]
     }
   }
 

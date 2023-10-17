@@ -2,7 +2,9 @@ export enum Operators {
     Contains = 'contains',
     DoesNotContain = 'doesNotContain',
     BeginsWith = 'beginsWith',
+    BeginsNotWith = 'beginsNotWith',
     EndsWith = 'endsWith',
+    EndsNotWith = 'endsNotWith',
     Equals = '=',
     IsNotEqual = '<>',
     MoreThan = '>',
@@ -22,9 +24,17 @@ export class FilterOperators {
         caption: 'Begins With',
         name: Operators.BeginsWith
     }
+    static BeginsNotWith = {
+        caption: 'Begins Not With',
+        name: Operators.BeginsNotWith
+    }
     static EndsWith = {
         caption: 'Ends With',
         name: Operators.EndsWith
+    }
+    static EndsNotWith = {
+        caption: 'Ends Not With',
+        name: Operators.EndsNotWith
     }
     static Equals = {
         caption: 'Equals',
