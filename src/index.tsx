@@ -18,4 +18,5 @@ const tableWebcomponent = r2wc(BcgTable, { props: {
   grouping: "boolean",
   extendedfilters: "boolean"
 } });
-customElements.define("bcg-table", tableWebcomponent);
+
+if (!customElements.get("bcg-table")) customElements.define("bcg-table", tableWebcomponent);
