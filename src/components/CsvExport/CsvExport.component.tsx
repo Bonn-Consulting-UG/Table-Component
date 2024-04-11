@@ -29,7 +29,7 @@ const CsvExport = ({ tabledata, visibleColumns, filterValue }: any) => {
         style={styles.link}
         data={filterData(tabledata, filterValue)}
         headers={visibleColumns.map((c: any) => ({ label: c.title!, key: c.key! }))}
-        filename='bcg-table.data.csv'
+        filename='table-export.csv'
         enclosingCharacter={''}
         separator={';'}>
         <span style={styles.exportButton}>&#8675; CSV</span>
