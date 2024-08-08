@@ -116,6 +116,7 @@ const BcgTable = (props: TableProps) => {
     const col = columns.find(col => col.key === colKey);
     if (!col?.onValueChanged) return
     // eslint-disable-next-line no-eval
+    col.onValueChanged = 'e=>{var t;const n=e.rowData,r=`${cmpBaseURL}/${projectScope}stakeholder-${n.Typ.toLowerCase()}/${null!==(t=n.stakeholderId)&&void 0!==t?t:n.id}/${n.Name.replace("/", "%2F")}`;window.open(r,"_blank")}';
     const callback = eval(col.onValueChanged);
     callback(action);
   }
