@@ -36,6 +36,15 @@ const isNotEqual = (data: any[], item: any) => {
 };
 const more = (data: any[], item: any) => data[item.field] > item.value;
 const less = (data: any[], item: any) => data[item.field] < item.value;
+
+const isTrue = (data: any[], item: any) => {
+  return data[item.field] === true;
+};
+
+const isFalse = (data: any[], item: any) => {
+  return data[item.field] !== true;
+};
+
 export const filterItem = (data: any[], filter: any) => {
   switch (filter.operator) {
     case Operators.Contains: return contains(data, filter);
@@ -48,6 +57,8 @@ export const filterItem = (data: any[], filter: any) => {
     case Operators.IsNotEqual: return isNotEqual(data, filter);
     case Operators.MoreThan: return more(data, filter);
     case Operators.LessThan: return less(data, filter);
+    case Operators.IsTrue: return isTrue(data, filter);
+    case Operators.IsFalse: return isFalse(data, filter);
     default: throw Error('unknown operator');
   }
 };

@@ -8,7 +8,9 @@ export enum Operators {
     Equals = '=',
     IsNotEqual = '<>',
     MoreThan = '>',
-    LessThan = '<'
+    LessThan = '<',
+    IsTrue = 'true',
+    IsFalse = 'false'
 }
 
 export class FilterOperators {
@@ -51,5 +53,13 @@ export class FilterOperators {
     static LessThan = {
         caption: 'Less than',
         name: Operators.LessThan
+    }
+    static IsTrue = {
+        caption: 'Is True',
+        name: Operators.IsTrue
+    }
+    static IsFalse = {
+        caption: 'Is False',
+        name: Operators.IsFalse
     }
 }

@@ -16,16 +16,39 @@ const ExtendedFilters = (props: {columns: ColumnDefinition[], filterValue: any, 
         return [ FilterOperators.Contains, FilterOperators.DoesNotContain, FilterOperators.BeginsWith, FilterOperators.BeginsNotWith, FilterOperators.EndsWith, FilterOperators.EndsNotWith ]
       case DataType.Number:
         return [ FilterOperators.Equals, FilterOperators.IsNotEqual, FilterOperators.MoreThan, FilterOperators.LessThan]
+      case DataType.Boolean:
+        return [ FilterOperators.IsTrue, FilterOperators.IsFalse]
       default:
         return [FilterOperators.Equals, FilterOperators.IsNotEqual]
     }
   }
 
+  const hardcodedBooleanFields = [
+    'Hauptkontext E-Mail erlaubt',
+    'Hauptkontext DSGVO zugestimmt',
+    'Hauptkontext Post erlaubt',
+    'Hauptkontext Massen-E-Mail erlaubt',
+    'Hauptkontext Anrufe erlaubt',
+    'E-Mail erlaubt',
+    'DSGVO zugestimmt',
+    'Post erlaubt',
+    'Massen-E-Mail erlaubt',
+    'Anrufe erlaubt',
+  ]
+
   const fields = props.columns.map((col: ColumnDefinition) => {
-    return {
-      caption: col.title,
-      name: col.key,
-      operators: getOperators(col.dataType)
+    if(hardcodedBooleanFields.includes(col.title)) {
+      return {
+        caption: col.title,
+        name: col.key,
+        operators: getOperators(DataType.Boolean)
+      }
+    } else {
+      return {
+        caption: col.title,
+        name: col.key,
+        operators: getOperators(col.dataType)
+      }
     }
   })
   
